@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: axenix_polygon_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: polygon_user
+      POSTGRES_PASSWORD: polygon_password
+      POSTGRES_DB: polygons
+    ports:
+      - "5444:5432"
+    volumes:
+      - polygon_pg_data:/var/lib/postgresql/data
+      - ./pg_db/init.sql:/docker-entrypoint-initdb.d/01_init.sql:ro
+      - ./pg_db/add_data.sql:/docker-entrypoint-initdb.d/02_add_data.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U polygon_user -d polygons"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  polygon_pg_data:

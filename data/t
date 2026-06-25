@@ -1,0 +1,6 @@
+USER=postgres
+PASSWORD=bn554540
+HOST=localhost
+PORT=5432
+DATABASE=axenix
+MODEL_NAME=Qwen/Qwen2.5-Coder-3B-Instruct
